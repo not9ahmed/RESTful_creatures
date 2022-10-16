@@ -1,0 +1,13 @@
+<h1>Dinosaurs</h1>
+
+<ul>
+    <% myDinos.forEach((dino, idx) => { %>
+        
+        <li>
+            <a href="/dinosaurs/<%= idx %> ">
+                <%= dino.name %> is a <%= dino.type %>
+            </a>
+        </li>
+        
+    <% }); %>
+</ul>
