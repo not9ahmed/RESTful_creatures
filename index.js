@@ -10,6 +10,7 @@ const PORT = 3500
 app.set('view engine', 'ejs')
 app.use(ejsLayouts)
 
+// Take http form data and parses it
 app.use(express.urlencoded({extended: false}))
 
 // attaching url to controllers folder
