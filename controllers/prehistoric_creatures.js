@@ -45,17 +45,80 @@ router.get('/new', (req, res) => {
 
 
 
+router.delete('/:idx', (req, res) => {
 
-router.get('/:idx', (req, res) => {
+    console.log('This is my requet params object', req.params)
+
+    let dinoData = require('../prehistoric_creatures.json')
+
+    dinoData.splice(req.params.idx, 1)
+
+    fs.writeFileSync('./prehistoric_creatures.json', JSON.stringify(dinoData))
+
+    res.redirect('/prehistoric_creatures')
+    
+})
+
+
+
+router.get('/edit/:creatureID', (req, res) => {
+
+
+    let context = {}
+
+    // Grab dino data
+    let creaturesData = require('../prehistoric_creatures.json')
+
+
+    context.creature = creaturesData[req.params.creatureID]
+
+    context.creatureID = req.params.creatureID
+
+
+    // Display edit page
+
+    res.render('prehistoric_creatures/edit', context)
+})
+
+
+
+// Update the data
+router.put('/:creatureID', (req, res) => {
+
+
+    let context = {}
+
+    // Grab dino data
+    let creaturesData = require('../prehistoric_creatures.json')
+
+
+    // update the dino
+    creaturesData[req.params.creatureID].type = req.body.type
+
+    creaturesData[req.params.creatureID].img_url = req.body.img_url
+
+
+    // update the json file
+    fs.writeFileSync('./prehistoric_creatures.json', JSON.stringify(creaturesData))
+
+
+
+    res.redirect('/prehistoric_creatures')
+})
+
+
+
+
+router.get('/:creatureID', (req, res) => {
 
     const context = {}
 
     const dinoData = require('../prehistoric_creatures.json')
 
-    let dinoIndex = parseInt(req.params.idx)
+    let creatureIndex = parseInt(req.params.creatureID)
 
     // context
-    context.myDino = dinoData[dinoIndex]
+    context.myCreature = dinoData[creatureIndex]
 
     res.render('prehistoric_creatures/show', context)
 

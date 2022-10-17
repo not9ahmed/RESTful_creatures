@@ -12,6 +12,12 @@
 
             </div>
         </li>
+
+        <a href="/prehistoric_creatures/edit/<%= idx %> ">Edit</a>
+
+        <form method="POST" action="/prehistoric_creatures/<%= idx %>/?_method=DELETE">
+            <input type="submit" value="Delete Dino">
+        </form>
         
     <% }); %>
 </ul>
