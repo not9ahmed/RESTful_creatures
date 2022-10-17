@@ -9,18 +9,31 @@ const fs = require('fs')
 
 router.get('/', (req, res) => {
 
-    let dinosaurs = fs.readFileSync('./dinosaurs.json')
-    let dinoData = JSON.parse(dinosaurs)
+    // reads the dinosaurs.json
+    // let dinosaurs = fs.readFileSync('./dinosaurs.json')
+    // let dinoData = JSON.parse(dinosaurs)
+
+    // OR USE THIS
+    let dinoData = require('../dinosaurs.json')
+
     console.log(dinoData)
     const context = {}
+
+
+    let nameFilter = req.query.nameFilter
+
+    console.log('The query is: ', nameFilter)
+
+
+    // if user searched for something
+    if(nameFilter){
+        console.log('not empty')
+
+        // check where dino name is matching to the filtered name
+        dinoData = dinoData.filter(dino => ( dino.name.toLowerCase() === nameFilter.toLowerCase() ) )
+    }
+
     context.myDinos = dinoData
-
-
-    // const myDinos = require('../dinosaurs.json')
-    // context.myDinos = require('../dinosaurs.json')
-    // console.log(context)
-    // res.send('hello world')
-
     res.render('dinosaurs/index.ejs' , context)
 })
 
