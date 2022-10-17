@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
 
 
     const context = {}
-    context.myDinos = require('../prehistoric_creatures.json')
+    context.myCreatures = require('../prehistoric_creatures.json')
 
 
     res.render('prehistoric_creatures/index' , context)
@@ -23,13 +23,13 @@ router.post('/', (req, res) => {
     console.log('This is the request body', req.body)
 
     // retrieve the save pre creatures as object
-    const dinoData = require('../prehistoric_creatures.json')
+    const creaturesData = require('../prehistoric_creatures.json')
 
     // push the new creature from the form
-    dinoData.push(req.body);
+    creaturesData.push(req.body);
 
     // save dinosaurs to the data.json file
-    fs.writeFileSync('./prehistoric_creatures.json', JSON.stringify(dinoData));
+    fs.writeFileSync('./prehistoric_creatures.json', JSON.stringify(creaturesData));
 
 
     res.redirect('/prehistoric_creatures')
@@ -49,11 +49,11 @@ router.delete('/:idx', (req, res) => {
 
     console.log('This is my requet params object', req.params)
 
-    let dinoData = require('../prehistoric_creatures.json')
+    let creaturesData = require('../prehistoric_creatures.json')
 
-    dinoData.splice(req.params.idx, 1)
+    creaturesData.splice(req.params.idx, 1)
 
-    fs.writeFileSync('./prehistoric_creatures.json', JSON.stringify(dinoData))
+    fs.writeFileSync('./prehistoric_creatures.json', JSON.stringify(creaturesData))
 
     res.redirect('/prehistoric_creatures')
     
