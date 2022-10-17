@@ -61,6 +61,66 @@ router.get('/new', (req, res) => {
 })
 
 
+router.delete('/:idx', (req, res) => {
+
+    console.log('This is my requet params object', req.params)
+
+    let dinoData = require('../dinosaurs.json')
+
+    dinoData.splice(req.params.idx, 1)
+
+    fs.writeFileSync('./dinosaurs.json', JSON.stringify(dinoData))
+
+    res.redirect('/dinosaurs')
+    
+})
+
+
+
+router.get('/edit/:idx', (req, res) => {
+
+
+    let context = {}
+
+    // Grab dino data
+    let dinoData = require('../dinosaurs.json')
+
+
+    context.dino = dinoData[req.params.idx]
+
+    context.dinoId = req.params.idx
+
+
+    // Display edit page
+
+    res.render('dinosaurs/edit', context)
+})
+
+
+
+// Update the data
+router.put('/:dinoID', (req, res) => {
+
+
+    let context = {}
+
+    // Grab dino data
+    let dinoData = require('../dinosaurs.json')
+
+
+    // update the dino
+    dinoData[req.params.dinoID].name = req.body.name
+
+    dinoData[req.params.dinoID].type = req.body.type
+
+
+    // update the json file
+    fs.writeFileSync('./dinosaurs.json', JSON.stringify(dinoData))
+
+
+
+    res.redirect('/dinosaurs')
+})
 
 
 router.get('/:idx', (req, res) => {
